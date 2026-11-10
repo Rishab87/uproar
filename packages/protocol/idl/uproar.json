@@ -1,0 +1,1088 @@
+{
+  "address": "2BgbuMAkSP1QwCcCc955i7Bhqv6fwRTqtVZzQU3WqKD1",
+  "metadata": {
+    "name": "uproar",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "UPROAR social protocol: identity PDAs, session keys and signed social events"
+  },
+  "instructions": [
+    {
+      "name": "claim_handle",
+      "discriminator": [
+        2
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile",
+          "writable": true
+        },
+        {
+          "name": "handle_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  97,
+                  110,
+                  100,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "handle"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "handle",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "close_profile",
+      "discriminator": [
+        6
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_session",
+      "discriminator": [
+        12
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "session",
+          "writable": true
+        },
+        {
+          "name": "rent_payer",
+          "writable": true,
+          "relations": [
+            "session"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_profile",
+      "discriminator": [
+        1
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  102,
+                  105,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_session",
+      "discriminator": [
+        10
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "delegate",
+          "docs": [
+            "A plain system account: it pays its own fees from the fuel and can do nothing else."
+          ],
+          "writable": true
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "profile"
+              },
+              {
+                "kind": "account",
+                "path": "delegate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "expires_at",
+          "type": "i64"
+        },
+        {
+          "name": "fuel",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "delete_post",
+      "docs": [
+        "Owner only: a leaked session key must not be able to wipe someone's history."
+      ],
+      "discriminator": [
+        21
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "extend_session",
+      "discriminator": [
+        11
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile",
+          "relations": [
+            "session"
+          ]
+        },
+        {
+          "name": "delegate",
+          "writable": true,
+          "relations": [
+            "session"
+          ]
+        },
+        {
+          "name": "session",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  101,
+                  115,
+                  115,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "profile"
+              },
+              {
+                "kind": "account",
+                "path": "delegate"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "expires_at",
+          "type": "i64"
+        },
+        {
+          "name": "fuel",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "follow",
+      "discriminator": [
+        26
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "target",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "like",
+      "discriminator": [
+        22
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pin",
+      "discriminator": [
+        29
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "option": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "discriminator": [
+        20
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "text",
+          "type": "string"
+        },
+        {
+          "name": "reply_to",
+          "type": {
+            "option": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        },
+        {
+          "name": "quote_of",
+          "type": {
+            "option": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "release_handle",
+      "discriminator": [
+        3
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "relations": [
+            "handle_account"
+          ]
+        },
+        {
+          "name": "handle_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  97,
+                  110,
+                  100,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "profile"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "repost",
+      "discriminator": [
+        24
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "revoke_all_sessions",
+      "discriminator": [
+        13
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "profile",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "rotate_authority",
+      "discriminator": [
+        5
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        },
+        {
+          "name": "new_authority",
+          "docs": [
+            "Must sign, so ownership can't be pushed to a mistyped or unusable address."
+          ],
+          "signer": true
+        },
+        {
+          "name": "profile",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_profile",
+      "discriminator": [
+        28
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "bio",
+          "type": "string"
+        },
+        {
+          "name": "website",
+          "type": "string"
+        },
+        {
+          "name": "location",
+          "type": "string"
+        },
+        {
+          "name": "avatar_seed",
+          "type": "u16"
+        },
+        {
+          "name": "accent",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "transfer_handle",
+      "discriminator": [
+        4
+      ],
+      "accounts": [
+        {
+          "name": "from_authority",
+          "signer": true
+        },
+        {
+          "name": "to_authority",
+          "signer": true
+        },
+        {
+          "name": "from_profile",
+          "writable": true
+        },
+        {
+          "name": "to_profile",
+          "writable": true
+        },
+        {
+          "name": "handle_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  104,
+                  97,
+                  110,
+                  100,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "from_profile"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unfollow",
+      "discriminator": [
+        27
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "target",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "unlike",
+      "discriminator": [
+        23
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "unrepost",
+      "discriminator": [
+        25
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "profile"
+        },
+        {
+          "name": "session",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "post",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Handle",
+      "discriminator": [
+        2
+      ]
+    },
+    {
+      "name": "Profile",
+      "discriminator": [
+        1
+      ]
+    },
+    {
+      "name": "Session",
+      "discriminator": [
+        3
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "CpiNotAllowed",
+      "msg": "This instruction must be called at the top level of a transaction, not by CPI"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "The signer is neither the profile owner nor a live delegate"
+    },
+    {
+      "code": 6002,
+      "name": "HandleInvalid",
+      "msg": "Handles are 3 to 15 characters of a-z, 0-9 and underscore"
+    },
+    {
+      "code": 6003,
+      "name": "ProfileAlreadyHasHandle",
+      "msg": "This profile already holds a handle"
+    },
+    {
+      "code": 6004,
+      "name": "HandleRequired",
+      "msg": "Claim a handle before using this profile"
+    },
+    {
+      "code": 6005,
+      "name": "HandleStillHeld",
+      "msg": "Release the handle before closing the profile"
+    },
+    {
+      "code": 6006,
+      "name": "SessionExpired",
+      "msg": "This session has expired"
+    },
+    {
+      "code": 6007,
+      "name": "SessionRevoked",
+      "msg": "This session was revoked"
+    },
+    {
+      "code": 6008,
+      "name": "SessionMismatch",
+      "msg": "This session does not belong to this signer and profile"
+    },
+    {
+      "code": 6009,
+      "name": "SessionTooLong",
+      "msg": "Sessions can last at most 30 days"
+    },
+    {
+      "code": 6010,
+      "name": "FuelTooHigh",
+      "msg": "Session fuel is above the safety cap"
+    },
+    {
+      "code": 6011,
+      "name": "DelegateIsAuthority",
+      "msg": "The owner wallet cannot be its own delegate"
+    },
+    {
+      "code": 6012,
+      "name": "TextEmpty",
+      "msg": "Post text cannot be empty"
+    },
+    {
+      "code": 6013,
+      "name": "TextTooLong",
+      "msg": "Post text is too long"
+    },
+    {
+      "code": 6014,
+      "name": "FieldTooLong",
+      "msg": "A profile field is too long"
+    },
+    {
+      "code": 6015,
+      "name": "CannotFollowSelf",
+      "msg": "You cannot follow yourself"
+    },
+    {
+      "code": 6016,
+      "name": "CloseTooSoon",
+      "msg": "Wait a few seconds before closing this profile"
+    },
+    {
+      "code": 6017,
+      "name": "CannotCloseRotatedProfile",
+      "msg": "A profile that changed wallets can't be closed"
+    },
+    {
+      "code": 6018,
+      "name": "OwnerOnly",
+      "msg": "Only the wallet that owns this profile can do this"
+    }
+  ],
+  "types": [
+    {
+      "name": "Handle",
+      "docs": [
+        "A claimed name. Holds its rent plus the refundable deposit."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "profile",
+            "type": "pubkey"
+          },
+          {
+            "name": "deposit",
+            "type": "u64"
+          },
+          {
+            "name": "claimed_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Profile",
+      "docs": [
+        "A permanent identity. Its address never changes, so a released handle can never drag",
+        "someone's old posts onto a new owner."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "docs": [
+              "The wallet that created this profile. Immutable, and the PDA seed."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "The wallet that controls this profile now."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "handle",
+            "type": {
+              "array": [
+                "u8",
+                15
+              ]
+            }
+          },
+          {
+            "name": "handle_len",
+            "docs": [
+              "Zero means no handle."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "session_epoch",
+            "docs": [
+              "Sessions from any other epoch are dead. Seeded from the slot and only ever moves forward,",
+              "so closing and recreating a profile cannot revive a revoked session."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Session",
+      "docs": [
+        "Lets a delegate key perform social actions for a profile until it expires."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "profile",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegate",
+            "type": "pubkey"
+          },
+          {
+            "name": "rent_payer",
+            "docs": [
+              "Receives the rent back when the session closes, whoever closes it."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "expires_at",
+            "type": "i64"
+          },
+          {
+            "name": "epoch",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "DEPOSIT_3_CHAR",
+      "docs": [
+        "Refundable handle deposits, in lamports. The deposit is the spam wall: it costs nothing to keep",
+        "an honest name and it makes farming thousands of names expensive."
+      ],
+      "type": "u64",
+      "value": "1000000000"
+    },
+    {
+      "name": "DEPOSIT_4_CHAR",
+      "type": "u64",
+      "value": "250000000"
+    },
+    {
+      "name": "DEPOSIT_DEFAULT",
+      "type": "u64",
+      "value": "10000000"
+    },
+    {
+      "name": "HANDLE_SEED",
+      "type": "bytes",
+      "value": "[104, 97, 110, 100, 108, 101]"
+    },
+    {
+      "name": "MAX_BIO_BYTES",
+      "type": "u32",
+      "value": "320"
+    },
+    {
+      "name": "MAX_FUEL_LAMPORTS",
+      "docs": [
+        "Caps what a leaked delegate key can lose."
+      ],
+      "type": "u64",
+      "value": "50000000"
+    },
+    {
+      "name": "MAX_HANDLE_LEN",
+      "type": "u8",
+      "value": "15"
+    },
+    {
+      "name": "MAX_LOCATION_BYTES",
+      "type": "u32",
+      "value": "64"
+    },
+    {
+      "name": "MAX_NAME_BYTES",
+      "type": "u32",
+      "value": "64"
+    },
+    {
+      "name": "MAX_SESSION_SECONDS",
+      "type": "i64",
+      "value": "2592000"
+    },
+    {
+      "name": "MAX_TEXT_BYTES",
+      "docs": [
+        "On-chain ceiling for post text. Reference clients also enforce a weighted 280-character limit."
+      ],
+      "type": "u32",
+      "value": "900"
+    },
+    {
+      "name": "MAX_WEBSITE_BYTES",
+      "type": "u32",
+      "value": "120"
+    },
+    {
+      "name": "MIN_HANDLE_LEN",
+      "type": "u8",
+      "value": "3"
+    },
+    {
+      "name": "PROFILE_SEED",
+      "type": "bytes",
+      "value": "[112, 114, 111, 102, 105, 108, 101]"
+    },
+    {
+      "name": "SESSION_SEED",
+      "type": "bytes",
+      "value": "[115, 101, 115, 115, 105, 111, 110]"
+    }
+  ]
+}

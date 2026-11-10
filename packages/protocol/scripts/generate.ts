@@ -1,5 +1,5 @@
-/** Regenerates the typed client and the constants table from the program's IDL. */
-import { readFileSync, rmSync, writeFileSync } from 'node:fs';
+/** Regenerates the typed client and the constants table from the program's IDL, and keeps a copy of the IDL. */
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rootNodeFromAnchor, type AnchorIdl } from '@codama/nodes-from-anchor';
@@ -13,6 +13,11 @@ const out = join(pkg, 'src/generated');
 const idl = JSON.parse(readFileSync(idlPath, 'utf8')) as AnchorIdl & {
   constants?: { name: string; type: unknown; value: string }[];
 };
+
+// The build writes the IDL into target/, which stays out of git. This copy is the published interface
+// for anyone building another app on the protocol, and it always matches the generated client.
+mkdirSync(join(pkg, 'idl'), { recursive: true });
+writeFileSync(join(pkg, 'idl/uproar.json'), readFileSync(idlPath));
 
 rmSync(out, { recursive: true, force: true });
 await createFromRoot(rootNodeFromAnchor(idl)).accept(

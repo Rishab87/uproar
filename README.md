@@ -8,7 +8,7 @@ it. This app is one reader of that chain and follows Indian law. Anyone can run 
 | Path | What |
 |---|---|
 | `programs/uproar` | The Anchor program: profiles, handles, session keys, signed social events |
-| `packages/protocol` | Generated client, the canonical decoder, text rules (280-weighted, mentions, tags) |
+| `packages/protocol` | The program's IDL (`idl/uproar.json`), generated client, the canonical decoder, text rules (280-weighted, mentions, tags) |
 | `packages/indexer-core` | Rebuilds state from the chain into Postgres, order-independent and idempotent |
 | `packages/safety` | Reports, legal clocks, withholding, appeals, hash-chained audit log, alarms |
 | `apps/web` | The Next.js app, operator console, legal pages, share images |
