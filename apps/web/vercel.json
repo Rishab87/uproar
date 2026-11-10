@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["sin1"],
+  "crons": [{ "path": "/api/cron/tick", "schedule": "0 3 * * *" }],
+  "functions": {
+    "app/api/cron/tick/route.ts": { "maxDuration": 60 },
+    "app/api/ingest/route.ts": { "maxDuration": 30 },
+    "app/api/admin/health/route.ts": { "maxDuration": 60 }
+  }
+}

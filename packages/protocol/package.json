@@ -1,0 +1,24 @@
+{
+  "name": "@uproar/protocol",
+  "version": "0.1.0",
+  "description": "Client, codecs and canonical rules for the UPROAR social protocol",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts"
+  },
+  "dependencies": {
+    "@solana/kit": "8.6.0",
+    "@solana/program-client-core": "8.6.0"
+  },
+  "devDependencies": {
+    "@codama/nodes-from-anchor": "^1.5.6",
+    "@codama/renderers-js": "2.8.0",
+    "codama": "^1.11.0",
+    "typescript": "^5.9.0"
+  }
+}

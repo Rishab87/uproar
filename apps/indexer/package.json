@@ -1,0 +1,25 @@
+{
+  "name": "@uproar/indexer",
+  "version": "0.1.0",
+  "description": "Run your own UPROAR indexer: backfill, reconcile, rebuild and prove state from the chain",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "uproar-indexer": "./src/cli.ts"
+  },
+  "scripts": {
+    "cli": "tsx src/cli.ts",
+    "proof": "tsx src/chain-proof.ts",
+    "seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "@solana/kit": "8.6.0",
+    "@uproar/indexer-core": "workspace:*",
+    "@uproar/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

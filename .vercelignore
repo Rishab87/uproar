@@ -1,0 +1,16 @@
+# Only source goes to Vercel. Local chain data, databases, build output and secrets stay here.
+.local
+.pgdata
+target
+.anchor
+node_modules
+**/node_modules
+**/.next
+**/test-results
+**/playwright-report
+**/.env*
+*.log
+.DS_Store
+
+# Launch films: sources and renders stay local.
+video

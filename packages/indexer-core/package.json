@@ -1,0 +1,20 @@
+{
+  "name": "@uproar/indexer-core",
+  "version": "0.1.0",
+  "description": "Rebuilds UPROAR state from Solana into Postgres",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./migrate": "./src/migrate.ts"
+  },
+  "dependencies": {
+    "@uproar/protocol": "workspace:*",
+    "postgres": "^4.1.0",
+    "@solana/kit": "8.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

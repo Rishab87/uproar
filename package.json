@@ -1,0 +1,30 @@
+{
+  "name": "uproar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "build:program": "cargo build-sbf && anchor idl build -p uproar -o target/idl/uproar.json && pnpm --filter @uproar/protocol generate",
+    "test:program": "cargo test -p uproar --no-fail-fast",
+    "test": "vitest run",
+    "typecheck": "pnpm -r --parallel exec tsc --noEmit",
+    "db:start": "scripts/dev-db.sh start",
+    "db:stop": "scripts/dev-db.sh stop",
+    "db:migrate": "tsx packages/indexer-core/scripts/migrate.ts",
+    "dev": "scripts/dev.sh",
+    "stop": "scripts/dev-stop.sh",
+    "test:all": "pnpm test:program && pnpm test && pnpm --filter @uproar/web e2e",
+    "proof:chain": "pnpm --filter @uproar/indexer proof",
+    "seed": "pnpm --filter @uproar/indexer seed"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.1.0"
+  }
+}

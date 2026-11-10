@@ -1,0 +1,15 @@
+{
+  "name": "@uproar/safety",
+  "version": "0.1.0",
+  "description": "Reports, legal clocks, withholding, appeals, audit log and alarms for the UPROAR reference app",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts", "./catalog": "./src/catalog.ts" },
+  "dependencies": {
+    "@uproar/indexer-core": "workspace:*",
+    "postgres": "^4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

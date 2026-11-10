@@ -1,0 +1,47 @@
+# rust / anchor
+target/
+.anchor/
+test-ledger/
+**/*.rs.bk
+
+# node
+node_modules/
+.next/
+.turbo/
+dist/
+*.tsbuildinfo
+playwright-report/
+test-results/
+coverage/
+
+# secrets and local env. Keypairs never live in this repo.
+.env
+.env.*
+!.env.example
+*-keypair.json
+deployer.json
+
+# local data
+.pgdata/
+.local/
+*.log
+
+# os
+.DS_Store
+.vercel
+.env*
+
+# Launch film renders and music stay out of git.
+video/**/out/
+video/**/*.mp3
+video/**/*.mp4
+video/**/*.wav
+
+# Kept local, out of the public repo: launch film work, the brief for counsel, one-off debug scripts.
+video/
+docs/LAWYER.md
+apps/web/e2e/debug-*.mjs
+apps/web/e2e/frames.mjs
+
+# The env template has only local defaults and empty slots.
+!.env.example

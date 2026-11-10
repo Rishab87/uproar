@@ -1,0 +1,16 @@
+[package]
+name = "cpi-caller"
+version = "0.0.0"
+description = "Test-only program: forwards an instruction to another program by CPI. Never deployed."
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+anchor-lang = "1.2.2"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }
